@@ -120,6 +120,12 @@ class YfinanceFetcher(BaseFetcher):
         """
         code = stock_code.strip().upper()
 
+        # 美股 .US 后缀：Yahoo Finance 使用裸代码（如 NVDA.US -> NVDA）。
+                if code.endswith(".US"):
+                                bare = code[:-3]
+                                if bare.isalpha() and 1 <= len(bare) <= 5:
+                                                    return bare
+                                    
         # 美股指数：映射到 Yahoo Finance 符号（如 SPX -> ^GSPC）
         yf_symbol, _ = get_us_index_yf_symbol(code)
         if yf_symbol:
