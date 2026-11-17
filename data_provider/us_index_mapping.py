@@ -13,9 +13,10 @@
 
 import re
 
-# 美股代码正则：1-5 个大写字母，可选 .X 后缀（如 BRK.B）
-_US_STOCK_PATTERN = re.compile(r'^[A-Z]{1,5}(\.[A-Z])?$')
-
+# 美股代码正则：1-5 个大写字母，可选 1-2 位字母后缀（如 BRK.B、NVDA.US）
+# 后缀允许两位字母，与 src/services/stock_list_parser.py 的
+# _US_TICKER_SHAPE_RE 保持一致（清单解析接受 "NVDA.US" 形式）。
+_US_STOCK_PATTERN = re.compile(r'^[A-Z]{1,5}(\.[A-Z]{1,2})?$')
 
 # 用户输入 -> (Yahoo Finance 符号, 中文名称)
 US_INDEX_MAPPING = {
